@@ -1,5 +1,6 @@
 ﻿using MaterialDesignThemes.Wpf;
 using MCC_Neo.ViewModels;
+using MCC_Neo.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,9 +29,9 @@ namespace MCC_Neo
 
             var mnu = new List<ItemMenu>
             {
-                new ItemMenu("Candidatos", PackIconKind.People, new UserControlProviders()),
-                new ItemMenu("Impressões", PackIconKind.Printer, null),
-                new ItemMenu("Cadastros", PackIconKind.Home, null)
+                new ItemMenu("Candidatos", PackIconKind.People, new CandidatosView()),
+                new ItemMenu("Impressões", PackIconKind.Printer, new UserControlProviders()),
+                new ItemMenu("Cadastros", PackIconKind.DesktopMacDashboard, new CadastrosView())
             };
 
             var menu = new Helpers.MenuHelpers(menuPrincipal.Background, StackPanelMain);

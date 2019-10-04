@@ -5,14 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MCC_Neo"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        mc:Ignorable="d"
+        mc:Ignorable="d" MinHeight="600" MinWidth="800"
         Title="MCC - Movimento de Cursilhos de Cristandade :: Neo" Height="600" Width="800"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
         TextElement.FontSize="13"
         TextOptions.TextFormattingMode="Ideal" 
         TextOptions.TextRenderingMode="Auto"        
-        Background="{DynamicResource MaterialDesignPaper}"
+        Background="#ff3c3939"
         FontFamily="{DynamicResource MaterialDesignFont}"
         WindowStartupLocation="CenterScreen">
     <Grid x:Name="GridPrincipal">
@@ -36,25 +36,23 @@
                 <Border Background="{Binding ElementName=menuPrincipal,Path=Background}"/>
                 <Image Source="Assets/LogoMCC_34.png" HorizontalAlignment="Stretch" Margin="3,5,3,3" ToolTip="Exibir logo do MCC"
                        x:Name="btnLogo" Mouse.MouseDown="BtnLogo_MouseDown" Cursor="Hand"/>
-                <!--<Menu Grid.Column="1" Height="35" Width="Auto" x:Name="menuPrincipal" 
-                      Foreground="#FF0E3178" Background="#FFF6891F">
-                    <MenuItem ToolTip="Candidatos" Header="Candidatos" Icon="{materialDesign:PackIcon Kind=Account}" 
-                              Focusable="True" Width="50"
-                              Height="{Binding ElementName=menuPrincipal,Path=Height,UpdateSourceTrigger=PropertyChanged}"/>
-                    <MenuItem ToolTip="Cadastros" Header="Cadastros" Icon="{materialDesign:PackIcon Kind=Home}" Focusable="True" Width="50"
-                              Height="{Binding ElementName=menuPrincipal,Path=Height,UpdateSourceTrigger=PropertyChanged}"/>
-                    <MenuItem ToolTip="Impressões" Icon="{materialDesign:PackIcon Kind=Printer}" Focusable="True" Width="50"
-                              Height="{Binding ElementName=menuPrincipal,Path=Height}"/>
-                </Menu>-->
                 <StackPanel Orientation="Horizontal" x:Name="menuPrincipal" Grid.Column="1" Background="#FFF6891F"/>
-                <TextBlock Text="Cursilho" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                <materialDesign:PackIcon Kind="Settings" HorizontalAlignment="Right" Margin="10" Grid.Column="3"/>
+                <TextBlock Text="13º Cursilho Misto para jovens" Grid.Column="2" FontWeight="Light" FontSize="16" 
+                           HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock.Effect>
+                        <DropShadowEffect ShadowDepth="2" Direction="300" Color="Black" Opacity="0.5" BlurRadius="3"/>
+                    </TextBlock.Effect>
+                </TextBlock>
+                <Button Grid.Column="3" ToolTip="Configurações">
+                    <materialDesign:PackIcon Kind="Settings" HorizontalAlignment="Right" Margin="0"/>
+                </Button>
             </Grid>
         </materialDesign:ColorZone>
         <ContentControl x:Name="StackPanelMain" Grid.Row="1" HorizontalAlignment="Stretch">
-            <StackPanel x:Name="stpLogo">
+            <StackPanel x:Name="stpLogo" VerticalAlignment="Center">
                 <Image Source="Assets/LogoMCC_320.png" Stretch="None" VerticalAlignment="Center" Margin="50"/>
-                <TextBlock Text="Movimento de Cursilhos de Cristandade" HorizontalAlignment="Center" FontSize="30"/>
+                <TextBlock Text="Movimento de Cursilhos de Cristandade" HorizontalAlignment="Center" 
+                           FontSize="30" Foreground="Wheat"/>
             </StackPanel>
         </ContentControl>
     </Grid>

@@ -33,7 +33,7 @@
                 <DataTemplate>
                     <StackPanel ToolTip="{Binding Path=Header}">
                         <materialDesign:PackIcon Kind="{Binding Path=Icon}" Width="19" Height="19"
-                                             Foreground="White"/>
+                                             Foreground="#ff303030"/>
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>

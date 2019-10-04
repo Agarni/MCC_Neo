@@ -40,8 +40,8 @@
                 </LinearGradientBrush>
             </Border.Background>
         </Border>
-        <TextBlock x:Name="txtTituloJanela" Text="Título" Foreground="White" FontWeight="DemiBold" 
-                   FontSize="16" Margin="8,3" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <TextBlock x:Name="txtTituloJanela" Text="Título" Foreground="White" FontWeight="Medium" 
+                   FontSize="16" Margin="8,5" HorizontalAlignment="Left" VerticalAlignment="Top"/>
         <StackPanel x:Name="stpBotoes" HorizontalAlignment="Right" Orientation="Horizontal" Height="Auto" VerticalAlignment="Top">
             <Button x:Name="btnMinizar" Focusable="False" ToolTip="Minimizar">
                 <materialDesign:PackIcon Foreground="White" Kind="WindowMinimize" Margin="0,7,0,0" />
