@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace MCC_Neo.Models
+namespace MCC_Neo.Core.Models
 {
     [System.ComponentModel.DataAnnotations.Schema.NotMapped]
     public class CursilhistaDTO

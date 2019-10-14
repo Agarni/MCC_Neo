@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MCC_Neo.Models
+namespace MCC_Neo.Core.Models
 {
     [Table("Cidades")]
     public class Cidade

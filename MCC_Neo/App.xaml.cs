@@ -1,4 +1,7 @@
-﻿using System;
+﻿using MvvmCross.Platforms.Wpf.Core;
+using MvvmCross.Platforms.Wpf.Views;
+using MvvmCross.Core;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -11,7 +14,11 @@ namespace MCC_Neo
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
-    public partial class App : Application
+    public partial class App : MvxApplication
     {
+        public App()
+        {
+            //this.RegisterSetupType<MvxWpfSetup<Core.App>>();
+        }
     }
 }

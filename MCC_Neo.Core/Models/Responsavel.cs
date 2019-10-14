@@ -1,4 +1,4 @@
-﻿using MCC_Neo.Helpers;
+﻿using MCC_Neo.Core.Helpers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MCC_Neo.Models
+namespace MCC_Neo.Core.Models
 {
     [Table("Responsaveis")]
     public class Responsavel : PropertyValidateModel

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MCC_Neo.Core.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -21,6 +22,8 @@ namespace MCC_Neo.Views
         public CandidatosView()
         {
             InitializeComponent();
+
+            this.DataContext = new CandidatosViewModel();
         }
 
         private async void BtnCandidato_Click(object sender, RoutedEventArgs e)

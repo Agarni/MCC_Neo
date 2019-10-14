@@ -1,4 +1,4 @@
-﻿using MCC_Neo.Helpers;
+﻿using MCC_Neo.Core.Helpers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MCC_Neo.Models
+namespace MCC_Neo.Core.Models
 {
     public class Pessoa : PropertyValidateModel
     {

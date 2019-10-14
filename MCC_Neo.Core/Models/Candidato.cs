@@ -1,9 +1,9 @@
-﻿using MCC_Neo.Helpers;
+﻿using MCC_Neo.Core.Helpers;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace MCC_Neo.Models
+namespace MCC_Neo.Core.Models
 {
     [Table("Candidatos")]
     public class Candidato : PropertyValidateModel

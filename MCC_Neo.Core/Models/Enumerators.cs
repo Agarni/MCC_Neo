@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace MCC_Neo
+namespace MCC_Neo.Core
 {
     public enum Equipe
     {

@@ -8,6 +8,13 @@
     <ApplicationIcon>logoMCC.ico</ApplicationIcon>
   </PropertyGroup>
 
+  <!--Publicação-->
+  <PropertyGroup>
+    <RuntimeIdentifier>win10-x64</RuntimeIdentifier>
+    <PublishSingleFile>true</PublishSingleFile>
+    <PublishTrimmed>true</PublishTrimmed>
+  </PropertyGroup>
+
   <ItemGroup>
     <None Remove="Assets\LogoMCC_320.png" />
     <None Remove="Assets\LogoMCC_34.png" />
@@ -30,6 +37,12 @@
 
   <ItemGroup>
     <PackageReference Include="MaterialDesignThemes" Version="3.0.0-ci604" />
+    <PackageReference Include="MvvmCross.Core" Version="5.7.0" />
+    <PackageReference Include="MvvmCross.Platforms.Wpf" Version="6.4.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MCC_Neo.Core\MCC_Neo.Core.csproj" />
   </ItemGroup>
 
 </Project>
