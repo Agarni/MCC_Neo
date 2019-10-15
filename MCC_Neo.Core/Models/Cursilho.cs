@@ -31,6 +31,7 @@ namespace MCC_Neo.Core.Models
 
         // Relacionamentos
         public virtual Cidade Cidade { get; set; }
+        public ICollection<CidadeCursilho> CidadesCursilho { get; set; }
         public virtual ICollection<MensagemCursilho> Mensagens { get; set; }
         public virtual ICollection<Responsavel> Responsaveis { get; set; }
         public virtual ICollection<Candidato> Candidatos { get; set; }

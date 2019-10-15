@@ -7,10 +7,8 @@ using System.Text;
 
 namespace MCC_Neo.Core.Persistencia
 {
-    public class CidadeRepository : ICidadeRepository
+    public class CidadeRepository : GenericRepository<Cidade>, ICidadeRepository
     {
-        private readonly Data.NeoDbContext _context;
-
         private List<Cidade> cidadesFake = new List<Cidade>()
             {
                 new Cidade()
@@ -39,49 +37,29 @@ namespace MCC_Neo.Core.Persistencia
                 }
             };
 
-        public CidadeRepository(Data.NeoDbContext context)
+        public CidadeRepository() : base()
         {
-            _context = context;
         }
 
-        public RetornoAcao Delete(object id)
+        public CidadeRepository(Data.NeoDbContext context) : base(context)
         {
-            throw new NotImplementedException();
         }
 
-        public RetornoAcao Insert(Cidade obj)
+        public IAsyncEnumerable<CidadeCursilho> ListarPorCursilho(int idCursilho)
         {
-            throw new NotImplementedException();
-        }
+            var cidadesCursilhos = new List<CidadeCursilho>();
+            foreach(var item in cidadesFake)
+            {
+                cidadesCursilhos.Add(new CidadeCursilho
+                {
+                    Cidade = item,
+                    CidadeId = item.CidadeId,
+                    Cursilho = new Cursilho { CidadeId = 1 },
+                    CursilhoId = 1
+                });
+            }
 
-        public IAsyncEnumerable<Cidade> ListarPorCursilho(int idCursilho)
-        {
-            return cidadesFake.ToAsyncEnumerable();
-        }
-
-        public IEnumerable<Cidade> ListarTodos()
-        {
-            throw new NotImplementedException();
-        }
-
-        public IAsyncEnumerable<Cidade> ListarTodosAsync()
-        {
-            return cidadesFake.ToAsyncEnumerable();
-        }
-
-        public Cidade LocalizarPorId(object id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public RetornoAcao Save()
-        {
-            throw new NotImplementedException();
-        }
-
-        public RetornoAcao Update(Cidade obj)
-        {
-            throw new NotImplementedException();
+            return cidadesCursilhos.ToAsyncEnumerable();
         }
     }
 }

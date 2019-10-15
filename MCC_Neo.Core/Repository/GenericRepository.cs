@@ -9,7 +9,7 @@ namespace MCC_Neo.Core.Repository
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
-        private readonly NeoDbContext _context = null;
+        protected readonly NeoDbContext _context = null;
         private readonly DbSet<T> table = null;
         
         public GenericRepository()

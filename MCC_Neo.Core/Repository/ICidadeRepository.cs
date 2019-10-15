@@ -7,6 +7,6 @@ namespace MCC_Neo.Core.Repository
 {
     public interface ICidadeRepository : IGenericRepository<Cidade>
     {
-        IAsyncEnumerable<Cidade> ListarPorCursilho(int idCursilho);
+        IAsyncEnumerable<CidadeCursilho> ListarPorCursilho(int idCursilho);
     }
 }

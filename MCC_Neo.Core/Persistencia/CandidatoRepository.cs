@@ -7,10 +7,8 @@ using System.Text;
 
 namespace MCC_Neo.Core.Persistencia
 {
-    public class CandidatoRepository : ICandidatoRepository
+    public class CandidatoRepository : GenericRepository<Candidato>, ICandidatoRepository
     {
-        private readonly Data.NeoDbContext _context;
-
         // provisório ---->
         List<Candidato> candidatosFake = new List<Candidato>
             {
@@ -46,19 +44,12 @@ namespace MCC_Neo.Core.Persistencia
                 }
             };
 
-        public CandidatoRepository(Data.NeoDbContext context)
+        public CandidatoRepository() : base()
         {
-            _context = context;
         }
 
-        public RetornoAcao Delete(object id)
+        public CandidatoRepository(Data.NeoDbContext context) : base(context)
         {
-            throw new NotImplementedException();
-        }
-
-        public RetornoAcao Insert(Candidato obj)
-        {
-            throw new NotImplementedException();
         }
 
         public IAsyncEnumerable<Candidato> ListarPorCidade(int idCursilho)
@@ -75,31 +66,6 @@ namespace MCC_Neo.Core.Persistencia
         {
             return candidatosFake.Where(x => x.CursilhoId == idCursilho && 
                 x.CandidatoCidade.CidadeId == idCidade).ToAsyncEnumerable();
-        }
-
-        public IEnumerable<Candidato> ListarTodos()
-        {
-            throw new NotImplementedException();
-        }
-
-        public IAsyncEnumerable<Candidato> ListarTodosAsync()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Candidato LocalizarPorId(object id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public RetornoAcao Save()
-        {
-            throw new NotImplementedException();
-        }
-
-        public RetornoAcao Update(Candidato obj)
-        {
-            throw new NotImplementedException();
         }
     }
 }

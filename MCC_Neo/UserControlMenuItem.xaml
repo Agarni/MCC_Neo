@@ -31,9 +31,10 @@
 
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel ToolTip="{Binding Path=Header}">
+                    <StackPanel ToolTip="{Binding Path=Header}" Orientation="Horizontal">
                         <materialDesign:PackIcon Kind="{Binding Path=Icon}" Width="19" Height="19"
                                              Foreground="#ff303030"/>
+                        <TextBlock Text="{Binding Header}" Margin="2" Foreground="#ff303030" Visibility="Collapsed"/>
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>

@@ -254,9 +254,9 @@ namespace MCC_Neo.Core.ViewModels
             using (var DbContext = new NeoUnitOfWork())
             {
                 ListaCidades = new BindingList<Cidade>();
-                await foreach(Cidade item in DbContext.Cidades.ListarPorCursilho(1))
+                await foreach(var item in DbContext.Cidades.ListarPorCursilho(1))
                 {
-                    ListaCidades.Add(item);
+                    ListaCidades.Add(item.Cidade);
                 }
             }
 

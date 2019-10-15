@@ -51,6 +51,19 @@ namespace MCC_Neo.Core.Data
             modelBuilder.Entity<Cursilho>()
                 .HasKey(x => x.CursilhoId);
 
+            #region Cidades Cursilho
+            modelBuilder.Entity<CidadeCursilho>()
+                .HasKey(cc => new { cc.CursilhoId, cc.CidadeId });
+            modelBuilder.Entity<CidadeCursilho>()
+                .HasOne(cc => cc.Cursilho)
+                .WithMany(c => c.CidadesCursilho)
+                .HasForeignKey(cc => cc.CursilhoId);
+            modelBuilder.Entity<CidadeCursilho>()
+                .HasOne(cc => cc.Cidade)
+                .WithMany(c => c.CidadesCursilho)
+                .HasForeignKey(cc => cc.CidadeId);
+            #endregion Cidades Cursilho
+
             #region Candidato
             modelBuilder.Entity<Candidato>()
                 .HasIndex(c => new { c.CursilhoId, c.CandidatoCidadeId });

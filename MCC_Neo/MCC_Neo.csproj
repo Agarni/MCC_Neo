@@ -36,7 +36,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="MaterialDesignThemes" Version="3.0.0-ci604" />
+    <PackageReference Include="MaterialDesignThemes" Version="3.0.0-ci663" />
     <PackageReference Include="MvvmCross.Core" Version="5.7.0" />
     <PackageReference Include="MvvmCross.Platforms.Wpf" Version="6.4.1" />
   </ItemGroup>
