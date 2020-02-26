@@ -16,8 +16,9 @@ namespace MCC_Neo.Core.Models
         [Column(TypeName = "varchar(70)")]
         public string NomeCidade { get; set; }
         public int CidadeAtiva { get; set; }
-        public ICollection<CidadeCursilho> CidadesCursilho { get; set; }
 
+        // Relacionamentos
+        public virtual ICollection<CidadeCursilho> CidadesCursilho { get; set; }
         public virtual ICollection<Cursilho> Cursilhos { get; set; }
         //[InverseProperty("CandidatoCidade")]
         public virtual ICollection<Candidato> CidadeCandidatos { get; set; }

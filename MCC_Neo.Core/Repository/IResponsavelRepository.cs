@@ -7,6 +7,7 @@ namespace MCC_Neo.Core.Repository
 {
     public interface IResponsavelRepository : IGenericRepository<Responsavel>
     {
-        IAsyncEnumerable<Responsavel> ListarPorCidade(int idCursilho);
+        IAsyncEnumerable<Responsavel> ListarPorCidade(int idCidade);
+        IAsyncEnumerable<Responsavel> ListarPorCursilho(int idCursilho);
     }
 }

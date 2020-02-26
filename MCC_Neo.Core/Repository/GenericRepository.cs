@@ -1,4 +1,5 @@
 ﻿using MCC_Neo.Core.Data;
+using MCC_Neo.Core.Helpers;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -10,13 +11,13 @@ namespace MCC_Neo.Core.Repository
     public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
         protected readonly NeoDbContext _context = null;
-        private readonly DbSet<T> table = null;
+        protected readonly DbSet<T> table = null;
         
-        public GenericRepository()
-        {
-            this._context = new NeoDbContext();
-            table = _context.Set<T>();
-        }
+        //public GenericRepository()
+        //{
+        //    this._context = new NeoDbContext();
+        //    table = _context.Set<T>();
+        //}
 
         public GenericRepository(NeoDbContext _context)
         {
@@ -24,12 +25,30 @@ namespace MCC_Neo.Core.Repository
             table = _context.Set<T>();
         }
 
-        public IEnumerable<T> ListarTodos()
+        public virtual IEnumerable<T> Listar()
         {
             return table.ToList();
         }
 
-        public T LocalizarPorId(object id)
+        public virtual IEnumerable<T> Listar(Func<T, bool> where)
+        {
+            return table.AsEnumerable().Where(where);
+        }
+
+        public virtual IAsyncEnumerable<T> ListarAsync(Func<T, bool> where)
+        {
+            return table.AsEnumerable().Where(where).ToAsyncEnumerable();
+        }
+
+        public virtual async IAsyncEnumerable<T> ListarAsync()
+        {
+            await foreach (var result in table.AsNoTracking().ToAsyncEnumerable())
+            {
+                yield return result;
+            }
+        }
+
+        public virtual T LocalizarPorId(object id)
         {
             return table.Find(id);
         }
@@ -40,6 +59,22 @@ namespace MCC_Neo.Core.Repository
 
             try
             {
+                var errosModel = ValidarModel.GetErrors(obj);
+
+                if (errosModel?.Count() > 0)
+                {
+                    var erros = new StringBuilder();
+                    foreach (var erroEncontrado in errosModel)
+                    {
+                        erros.AppendLine(erroEncontrado.MensagemErro);
+                    }
+
+                    retorno.Sucesso = false;
+                    retorno.MensagemRetorno = erros.ToString();
+
+                    return retorno;
+                }
+
                 table.Add(obj);
             }
             catch (Exception ex)
@@ -90,12 +125,19 @@ namespace MCC_Neo.Core.Repository
             return retorno;
         }
 
-        public async IAsyncEnumerable<T> ListarTodosAsync()
+        public bool Any()
         {
-            await foreach (var result in table.ToAsyncEnumerable())
-            {
-                yield return result;
-            }
+            return table.Any();
+        }
+
+        public void AddRange(IEnumerable<T> lista)
+        {
+            table.AddRange(lista);
+        }
+
+        public virtual T FirstOrDefault(Func<T, bool> condicao)
+        {
+            return table.FirstOrDefault(condicao);
         }
     }
 }

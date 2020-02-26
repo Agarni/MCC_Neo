@@ -18,31 +18,45 @@
   <ItemGroup>
     <None Remove="Assets\LogoMCC_320.png" />
     <None Remove="Assets\LogoMCC_34.png" />
+    <None Remove="Assets\LogoMCC_Flat_48x48.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Assets\LogoMCC_320.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\LogoMCC_34.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <Resource Include="Assets\LogoMCC_320.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\LogoMCC_34.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="Assets\Logo.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Assets\LogoMCC_Flat_48x48.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="MaterialDesignThemes" Version="3.0.0-ci663" />
-    <PackageReference Include="MvvmCross.Core" Version="5.7.0" />
-    <PackageReference Include="MvvmCross.Platforms.Wpf" Version="6.4.1" />
+    <PackageReference Include="MaterialDesignColors" Version="1.2.2" />
+    <PackageReference Include="MaterialDesignThemes" Version="3.0.1" />
+    <PackageReference Include="MvvmCross.Platforms.Wpf" Version="6.4.2" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\MCC_Neo.Core\MCC_Neo.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Referencias\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="BlurMessageBox">
+      <HintPath>Referencias\BlurMessageBox.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

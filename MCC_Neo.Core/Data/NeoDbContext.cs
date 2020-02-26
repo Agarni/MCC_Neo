@@ -10,38 +10,41 @@ namespace MCC_Neo.Core.Data
 {
     public class NeoDbContext : DbContext
     {
-        public NeoDbContext()
+        public NeoDbContext(DbContextOptions options) : base(options)
         {
-            try
-            {
-                var dir = CaminhoDatabase();
+            //try
+            //{
+            //    var dir = CaminhoDatabase();
 
-                if (!Directory.Exists(dir))
-                {
-                    Directory.CreateDirectory(dir);
-                }
+            //    if (!Directory.Exists(dir))
+            //    {
+            //        Directory.CreateDirectory(dir);
+            //    }
 
-                //Database.Migrate();
-            }
-            catch (Exception ex)
-            {
-                //System.Windows.MessageBox.Show("Erro ao abrir BD!" + Environment.NewLine + Environment.NewLine +
-                //    ex.Message, "Erro de conexão", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
-                //App.Current.Shutdown();
-            }
+            //    //Database.Migrate();
+            //}
+            //catch (Exception ex)
+            //{
+            //    //System.Windows.MessageBox.Show("Erro ao abrir BD!" + Environment.NewLine + Environment.NewLine +
+            //    //    ex.Message, "Erro de conexão", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+            //    //App.Current.Shutdown();
+            //}
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            string dirDB = CaminhoDatabase();
+            //string dirDB = CaminhoDatabase();
 
-            string connectionStringBuilder = new SqliteConnectionStringBuilder()
-            {
-                DataSource = Path.Combine(dirDB, @"MCC_Neo.db")
-            }.ToString();
+            //string connectionStringBuilder = new SqliteConnectionStringBuilder()
+            //{
+            //    DataSource = Path.Combine(dirDB, @"MCC_Neo.db")
+            //}.ToString();
 
-            var connection = new SqliteConnection(connectionStringBuilder);
-            optionsBuilder.UseSqlite(connection);
+            //var connection = new SqliteConnection(connectionStringBuilder);
+            //optionsBuilder
+            //    .UseSqlite(connection);
+
+            optionsBuilder.UseLazyLoadingProxies();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -77,11 +80,6 @@ namespace MCC_Neo.Core.Data
                 .HasIndex(p => p.Nome);
 
             modelBuilder.Entity<Candidato>()
-                .HasOne(p => p.PadrinhoCidade)
-                .WithMany(c => c.CidadePadrinhos)
-                .HasForeignKey(c => c.PadrinhoCidadeId);
-
-            modelBuilder.Entity<Candidato>()
                 .HasOne(g => g.Grupo)
                 .WithMany(g => g.Candidatos)
                 .HasForeignKey(g => g.GrupoId);
@@ -98,8 +96,6 @@ namespace MCC_Neo.Core.Data
                 .HasIndex(m => new { m.MensagemAtiva, m.NomeMensagem });
             #endregion Mensagem
 
-            //modelBuilder.Entity<Grupo>()
-            //    .has
             modelBuilder.Entity<Grupo>()
                 .HasIndex(g => g.Nome);
 

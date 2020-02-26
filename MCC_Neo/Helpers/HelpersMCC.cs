@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MaterialDesignThemes.Wpf;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -30,6 +31,22 @@ namespace MCC_Neo.Helpers
             {
                 return System.Windows.Media.Colors.Black;
             }
+        }
+
+        public static System.Windows.Forms.DialogResult ExibirMensagem(string mensagem)
+        {
+            return BlurMessageBox.MsgBox.Show(mensagem, "MainDialogHost");
+        }
+
+        public static bool EqualsAny(this object objeto, params object[] valores)
+        {
+            foreach (var busca in valores)
+            {
+                if (objeto.Equals(busca))
+                    return true;
+            }
+
+            return false;
         }
     }
 }

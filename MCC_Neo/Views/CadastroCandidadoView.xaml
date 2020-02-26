@@ -1,0 +1,177 @@
+﻿<UserControl x:Class="MCC_Neo.Views.CadastroCandidatoView" x:Name="CadastroCandidatoVW"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MCC_Neo.Views"
+             xmlns:core="clr-namespace:MCC_Neo.Core;assembly=MCC_Neo.Core"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:helpers="clr-namespace:MCC_Neo.Helpers"
+             mc:Ignorable="d" Width="650" Height="285"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid Margin="3">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Text="{Binding CandidatoCidade.NomeCidade}" Grid.Row="0"
+                       Foreground="Silver" FontSize="16" FontWeight="Bold" FontStyle="Italic"
+                       HorizontalAlignment="Right" VerticalAlignment="Top" Margin="3"/>
+            <TabControl Grid.Row="0" MinWidth="{Binding ElementName=CadastroCandidatoVW,Path=MinWidth}"
+                        MinHeight="{Binding ElementName=CadastroCandidatoVW,Path=MinHeight}">
+                <TabItem Header="Dados gerais">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="200*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBox Grid.Column="0" Margin="3" 
+                                 Text="{Binding Path=Nome, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, 
+                                        NotifyOnValidationError=True, ValidatesOnDataErrors=True}" 
+                                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                 materialDesign:HintAssist.Hint="Nome"/>
+                                <TextBox Grid.Column="1" Margin="3" Width="130"
+                                 Text="{Binding Path=NomeCracha, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, 
+                                        NotifyOnValidationError=True, ValidatesOnDataErrors=True}" 
+                                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                 materialDesign:HintAssist.Hint="Nome no crachá"/>
+                            </Grid>
+                            <WrapPanel Grid.Row="1" VerticalAlignment="Center" Margin="2">
+                                <DatePicker SelectedDate="{Binding Path=DataNascimento, Mode=TwoWay, 
+                                UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True, ValidatesOnDataErrors=True}"
+                                        Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Language="pt-BR" SelectedDateFormat="Short"
+                                        materialDesign:HintAssist.Hint="Data nascimento" Margin="3,7,7,3" Width="118"/>
+                                          <!--helpers:EnumHelper.Enum="{x:Type core:Sexo}"--> 
+                                <ComboBox materialDesign:HintAssist.Hint="Sexo" Margin="3,7,7,3" Width="108"
+                                          Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                                          ItemsSource="{Binding Source={helpers:Enum {x:Type core:Sexo}}}"
+                                          DisplayMemberPath="Value" SelectedValuePath="Value"
+                                          SelectedValue="{Binding Path=SexoPessoa, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                <ComboBox materialDesign:HintAssist.Hint="Escolaridade" Width="178" 
+                                      Style="{StaticResource MaterialDesignFloatingHintComboBox}" Margin="3,7,7,3"
+                                      ItemsSource="{Binding Source={helpers:EnumExtension {x:Type core:NivelEscolaridade}}}" 
+                                      DisplayMemberPath="Description" SelectedValuePath="Value"
+                                      SelectedValue="{Binding Path=Escolaridade, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <ComboBox materialDesign:HintAssist.Hint="Estado civil" Margin="3,7,7,3" Width="150"
+                                          Style="{StaticResource MaterialDesignFloatingHintComboBox}" 
+                                          ItemsSource="{Binding Source={helpers:EnumExtension {x:Type core:EstadoCivil}}}" 
+                                          DisplayMemberPath="Description" SelectedValuePath="Value"
+                                          SelectedValue="{Binding Path=EstadoCivil, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </WrapPanel>
+                            <WrapPanel Grid.Row="2" VerticalAlignment="Center" Margin="2">
+                                <TextBox Margin="3" Text="{Binding Path=Profissao, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}" Width="175"
+                                     materialDesign:HintAssist.Hint="Profissão"/>
+                                <TextBox Margin="3" Text="{Binding Path=Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}" Width="200"
+                                     materialDesign:HintAssist.Hint="E-mail"/>
+                                <TextBox Margin="3" Text="{Binding Path=Telefones, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}" Width="200"
+                                     materialDesign:HintAssist.Hint="Telefones"/>
+                            </WrapPanel>
+                            <TextBox Grid.Row="3" Margin="5,7,9,3" Text="{Binding Path=Endereco, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                 materialDesign:HintAssist.Hint="Endereço"/>
+                            <WrapPanel Grid.Row="4">
+                                <CheckBox Content="Conhece o MCC" Margin="3,8,5,3" VerticalAlignment="Center"
+                                      IsChecked="{Binding Path=ConheceMCC,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                                <TextBox Grid.Row="0" Margin="3" 
+                                 Text="{Binding Path=Paroquia, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, 
+                                        NotifyOnValidationError=True, ValidatesOnDataErrors=True}" 
+                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}" Width="200"
+                                     materialDesign:HintAssist.Hint="Paróquia que participa"/>
+                                <TextBox Margin="3,3,0,3" HorizontalAlignment="Left"
+                                 Text="{Binding Path=RestricaoAlimentar, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                 Style="{StaticResource MaterialDesignFloatingHintTextBox}" Width="231"
+                                 materialDesign:HintAssist.Hint="Restrição alimentar"/>
+                            </WrapPanel>
+                        </Grid>
+                    </ScrollViewer>
+                </TabItem>
+                <TabItem Header="Outras informações" x:Name="TabOutrasInformacoes">
+                    <ScrollViewer>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <TextBox Grid.Row="0" Margin="3" 
+                                 Text="{Binding Path=NomePadrinho, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, 
+                                        NotifyOnValidationError=True, ValidatesOnDataErrors=True}" 
+                                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                 materialDesign:HintAssist.Hint="Nome do Padrinho"/>
+
+                            <WrapPanel Grid.Row="1" Margin="3">
+                                <TextBox Grid.Row="0" Margin="3" 
+                                 Text="{Binding Path=CURPadrinho, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, 
+                                        NotifyOnValidationError=True, ValidatesOnDataErrors=True}" 
+                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}" Width="200"
+                                     materialDesign:HintAssist.Hint="Nº do Cursilho"/>
+                                <TextBox materialDesign:HintAssist.Hint="Cidade do Padrinho"
+                                         Style="{StaticResource MaterialDesignFloatingHintTextBox}" Width="173" Margin="3"
+                                         Text="{Binding Path=PadrinhoCidade,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                                <TextBox Grid.Row="0" Margin="3" 
+                                 Text="{Binding Path=PadrinhoTelefones, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, 
+                                        NotifyOnValidationError=True, ValidatesOnDataErrors=True}" 
+                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}" Width="200"
+                                     materialDesign:HintAssist.Hint="Telefones"/>
+                                <CheckBox Content="Participa da Escola Vivencial" Margin="3"
+                                      IsChecked="{Binding Path=PadrinhoParticipaEV,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                                <TextBox Grid.Row="0" Margin="3" 
+                                 Text="{Binding Path=PadrinhoParoquia, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, 
+                                        NotifyOnValidationError=True, ValidatesOnDataErrors=True}" 
+                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}" Width="279"
+                                     materialDesign:HintAssist.Hint="Paróquia que pertence"/>
+                            </WrapPanel>
+
+                            <GroupBox Grid.Row="2" Header="Participação no CUR" Margin="3">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+
+                                    <ComboBox ItemsSource="{Binding ListaGruposSelecionaveis}" materialDesign:HintAssist.Hint="Grupo"
+                                  Style="{StaticResource MaterialDesignFloatingHintComboBox}" Margin="3" DisplayMemberPath="Nome"
+                                  SelectedValue="{Binding Path=Grupo,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                                </Grid>
+                            </GroupBox>
+                        </Grid>
+                    </ScrollViewer>
+                </TabItem>
+            </TabControl>
+            
+            <!--<StackPanel Orientation="Horizontal" Grid.Row="4" HorizontalAlignment="Right" 
+                    Margin="0 16 0 0">
+                <Button IsCancel="True" Margin="8 0 0 0" Style="{StaticResource MaterialDesignRaisedLightButton}"
+                    Command="{x:Static wpf:DialogHost.CloseDialogCommand}">
+                    <Button.CommandParameter>
+                        <system:Boolean>False</system:Boolean>
+                    </Button.CommandParameter>
+                    Cancela
+                </Button>
+                <Button IsDefault="True" Margin="5"
+                    Command="{x:Static wpf:DialogHost.CloseDialogCommand}">
+                    <Button.CommandParameter>
+                        <system:Boolean>True</system:Boolean>
+                    </Button.CommandParameter>
+                    Confirma
+                </Button>
+            </StackPanel>-->
+        </Grid>
+    </Grid>
+</UserControl>

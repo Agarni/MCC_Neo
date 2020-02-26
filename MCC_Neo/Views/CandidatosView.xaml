@@ -107,7 +107,7 @@
 
             <!--Candidatos-->
             <DataGrid Grid.Row="1" Grid.Column="2" ItemsSource="{Binding ListaCandidatos}" Margin="1" x:Name="gridCandidatos"
-                          SelectedValue="{Binding CandidatoSelecionado}" 
+                          SelectedItem="{Binding CandidatoSelecionado,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
                       IsReadOnly="True" AutoGenerateColumns="False" GridLinesVisibility="All" 
                       AlternatingRowBackground="#B7F2F2F2" VerticalGridLinesBrush="LightGray">
                 <DataGrid.Columns>

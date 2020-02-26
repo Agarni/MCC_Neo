@@ -57,6 +57,20 @@ namespace MCC_Neo
                 ((UserControlMenuItem)menuPrincipal.Children[0]).Selecionar(-1);
             }
         }
+
+        public void BloquearTela(bool bloquear)
+        {
+            StackPanelMain.IsHitTestVisible = !bloquear;
+        }
+
+        private void DialogHost_DialogOpened(object sender, DialogOpenedEventArgs eventArgs)
+        {
+            BloquearTela(true);
+        }
+
+        private void DialogHost_DialogClosing(object sender, DialogClosingEventArgs eventArgs)
+        {
+            BloquearTela(false);
+        }
     }
 }
-

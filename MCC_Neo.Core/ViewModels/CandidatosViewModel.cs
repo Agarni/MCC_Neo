@@ -11,6 +11,7 @@ using Utileco;
 using MCC_Neo.Core.Repository;
 using MCC_Neo.Core.Data;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace MCC_Neo.Core.ViewModels
 {
@@ -238,11 +239,14 @@ namespace MCC_Neo.Core.ViewModels
         #region Variáveis globais
         private List<Candidato> _candidatos = new List<Candidato>();
         private List<Candidato> candidatosConsulta;
+        private readonly INeoUnitOfWork context;
         #endregion Variáveis globais
 
-        public CandidatosViewModel()
+        public CandidatosViewModel(IServiceProvider context)
         {
             IsCandidatoOpen = false;
+            this.context = context.GetRequiredService<INeoUnitOfWork>();
+
             //CmdExcluirCandidato = new MvxCommand(ExcluirCandidato, () => CanExcluirCandidato());
 
             CarregarCidades();
@@ -251,13 +255,14 @@ namespace MCC_Neo.Core.ViewModels
         #region Métodos de consulta
         public async void CarregarCidades()
         {
-            using (var DbContext = new NeoUnitOfWork())
-            {
-                ListaCidades = new BindingList<Cidade>();
-                await foreach(var item in DbContext.Cidades.ListarPorCursilho(1))
+            ListaCidades = new BindingList<Cidade>()
                 {
-                    ListaCidades.Add(item.Cidade);
-                }
+                    new Cidade { CidadeId = 0, NomeCidade = "## Todas cidades ##" }
+                };
+
+            await foreach (var item in context.CidadesCursilho.ListarPorCursilho(App.IdCursilho))
+            {
+                ListaCidades.Add(item.Cidade);
             }
 
             CidadeSelecionada = ListaCidades.FirstOrDefault();
@@ -265,16 +270,15 @@ namespace MCC_Neo.Core.ViewModels
 
         public async void CarregarCandidatos(int idCidade = 0)
         {
-            using (var DbContext = new NeoUnitOfWork())
-            {
-                _candidatos = new List<Candidato>();
+            //using (var DbContext = new NeoUnitOfWork(Servicos.ServiceProvider))
+            //{
+            _candidatos = new List<Candidato>();
 
-                await foreach (Candidato item in (idCidade == 0 ? 
-                    DbContext.Candidatos.ListarPorCursilho(1) :
-                    DbContext.Candidatos.ListarPorCursilhoCidade(1, idCidade)))
-                {
-                    _candidatos.Add(item);
-                }
+            await foreach (Candidato item in (idCidade == 0 ?
+                context.Candidatos.ListarPorCursilho(App.IdCursilho) :
+                context.Candidatos.ListarPorCursilhoCidade(App.IdCursilho, idCidade)))
+            {
+                _candidatos.Add(item);
             }
 
             if (_candidatos?.Count > 0)
@@ -328,118 +332,27 @@ namespace MCC_Neo.Core.ViewModels
             //};
         }
 
-        public bool AtualizarCandidato()
+        public RetornoAcao AtualizarCandidato()
         {
-            var retorno = false;
+            RetornoAcao retorno;
             var novo = (CandidatoSelecionado.Id == 0);
+            CandidatoSelecionado.CursilhoId = App.IdCursilho;
+            CandidatoSelecionado.CandidatoCidade = CidadeSelecionada;
 
-            // ajustar
-            //using (var ctx = new DBCursilho())
-            //{
-            //    try
-            //    {
-            //        // Verifica erros no model
-            //        var erro = "";
-            //        var errosModel = ValidarModel.GetErrors(CandidatoSelecionado);
-
-            //        foreach (var erroEncontrado in errosModel)
-            //        {
-            //            erro += erroEncontrado.MensagemErro + Environment.NewLine;
-            //        }
-
-            //        if (!string.IsNullOrEmpty(erro))
-            //        {
-            //            throw new Exception(erro);
-            //        }
-
-            //        // Cidade do candidato
-            //        if (novo)
-            //        {
-            //            if (ctx.Entry(CidadeSelecionada).State == EntityState.Detached)
-            //                ctx.Cidades.Attach(CidadeSelecionada);
-
-            //            CandidatoSelecionado.CandidatoCidade = CidadeSelecionada;
-            //            ctx.Entry(CidadeSelecionada).State = EntityState.Unchanged;
-            //        }
-
-            //        // Cidade do padrinho
-            //        if (novo || CandidatoSelecionado.PadrinhoCidadeId != PadrinhoCidadeSelecionado.CidadeId)
-            //        {
-            //            if (ctx.Entry(PadrinhoCidadeSelecionado).State == EntityState.Detached)
-            //                ctx.Cidades.Attach(PadrinhoCidadeSelecionado);
-
-            //            ctx.Entry(PadrinhoCidadeSelecionado).State = EntityState.Unchanged;
-            //            CandidatoSelecionado.PadrinhoCidade = PadrinhoCidadeSelecionado;
-            //        }
-
-            //        // Grupo participante no CUR
-            //        int idGrupo = CandidatoSelecionado.Grupo.GrupoId;
-            //        CandidatoSelecionado.Grupo = ctx.Grupos
-            //            .FirstOrDefault(g => g.GrupoId == CandidatoSelecionado.Grupo.GrupoId);
-
-            //        // Atualiza dados do candidato
-            //        ctx.Candidatos.Attach(CandidatoSelecionado);
-
-            //        // Aplicando atualizações no BD
-            //        ctx.Entry(CandidatoSelecionado).State = (novo ? EntityState.Added : EntityState.Modified);
-
-            //        // Nome no crachá
-            //        CandidatoSelecionado.Nome = CandidatoSelecionado.Nome.Trim();
-            //        if (string.IsNullOrWhiteSpace(CandidatoSelecionado.NomeCracha))
-            //            CandidatoSelecionado.NomeCracha = CandidatoSelecionado.Nome.Trim().Contains(" ") ? CandidatoSelecionado.Nome
-            //                .Substring(0, CandidatoSelecionado.Nome.IndexOf(" ")) : CandidatoSelecionado.Nome.Trim();
-            //        CandidatoSelecionado.Grupo = ctx.Grupos
-            //            .FirstOrDefault(g => g.GrupoId == idGrupo);
-
-            //        try
-            //        {
-            //            ctx.SaveChanges();
-
-            //            CalculaTotais();
-            //        }
-            //        catch (Exception e) // Tratamento de contorno devido ao erro de SQLite
-            //        {
-            //            var exc = (e.Message + e.InnerException.Message).ToUpper();
-            //            if (exc.Contains("UNIQUE") && exc.Contains("CANDIDATOS.ID"))
-            //            {
-            //                CandidatoSelecionado.Id = 0;
-            //                ctx.Entry(CandidatoSelecionado).State = EntityState.Added;
-            //                ctx.SaveChanges();
-            //            }
-            //            else
-            //            {
-            //                throw e;
-            //            }
-            //        }
-
-            //        retorno = true;
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        var erros = "";
-
-            //        if (string.IsNullOrEmpty(erros.Trim()))
-            //        {
-            //            erros = ex.Message;
-
-            //            if (erros.ToUpper().Contains("INNER EXCEPTION FOR DETAILS"))
-            //            {
-            //                erros += Environment.NewLine + ex.InnerException.Message;
-            //            }
-            //        }
-
-            //        MsgBox.Show(erros, "Erro de atualização", Buttons.OK, Icons.Error);
-            //        return false;
-            //    }
-
-            //}
-
-            if (novo)
+            // Nome no crachá
+            CandidatoSelecionado.Nome = CandidatoSelecionado.Nome?.Trim();
+            if (string.IsNullOrWhiteSpace(CandidatoSelecionado.NomeCracha) && !string.IsNullOrWhiteSpace(CandidatoSelecionado.Nome))
             {
-                CarregarCandidatos(CidadeSelecionada.CidadeId);
+                CandidatoSelecionado.NomeCracha = CandidatoSelecionado.Nome.Trim().Contains(" ") ? CandidatoSelecionado.Nome
+                    .Substring(0, CandidatoSelecionado.Nome.IndexOf(" ")) : CandidatoSelecionado.Nome.Trim();
             }
-
-            NomeBusca = "";
+            
+            retorno = (novo ? context.Candidatos.Insert(CandidatoSelecionado) : context.Candidatos.Update(CandidatoSelecionado));
+            
+            if (retorno.Sucesso)
+            {
+                retorno = context.Save();
+            }
 
             return retorno;
         }

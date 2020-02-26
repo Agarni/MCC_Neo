@@ -6,13 +6,13 @@ using System.Text;
 
 namespace MCC_Neo.Core
 {
-    public interface INeoUnitOfWork : IDisposable
+    public interface INeoUnitOfWork //: IDisposable
     {
         void CreateTransaction();
         bool TransactionAtiva { get; }
         void Commit();
         void Rollback();
-        void Save();
+        RetornoAcao Save();
         object Context { get; }
 
         // Repositórios
@@ -23,5 +23,6 @@ namespace MCC_Neo.Core
         IGenericRepository<Mensagem> Mensagens { get; }
         IGenericRepository<Funcao> Funcoes { get; }
         IGenericRepository<Parametrizacao> Parametros { get; }
+        ICidadeCursilhoRepository CidadesCursilho { get; }
     }
 }

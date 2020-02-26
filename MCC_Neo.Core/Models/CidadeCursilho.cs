@@ -7,8 +7,8 @@ namespace MCC_Neo.Core.Models
     public class CidadeCursilho
     {
         public int CursilhoId { get; set; }
-        public Cursilho Cursilho { get; set; }
+        public virtual Cursilho Cursilho { get; set; }
         public int CidadeId { get; set; }
-        public Cidade Cidade { get; set; }
+        public virtual Cidade Cidade { get; set; }
     }
 }

@@ -32,8 +32,6 @@ namespace MCC_Neo.Core.Models
         [Column(TypeName = "varchar(50)")]
         public string Profissao { get; set; }
         public NivelEscolaridade Escolaridade { get; set; }
-        // Relacionamentos
-        public virtual Cursilho Cursilho { get; set; }
 
         // Candidato
         [MaxLength(20)]
@@ -51,6 +49,7 @@ namespace MCC_Neo.Core.Models
         public string NomePadrinho { get; set; }
         [MaxLength(50)]
         [Column(TypeName = "varchar(50)")]
+        [Required(ErrorMessage = "Nome padrinho/madrinha não informado")]
         public string CURPadrinho { get; set; }
         public bool PadrinhoParticipaEV { get; set; }
         [MaxLength(50)]
@@ -59,16 +58,18 @@ namespace MCC_Neo.Core.Models
         [MaxLength(50)]
         [Column(TypeName = "varchar(50)")]
         public string PadrinhoParoquia { get; set; }
+        [MaxLength(50)]
+        [Column(TypeName = "varchar(50)")]
+        [Required(ErrorMessage = "Cidade padrinho/madrinha não informada")]
+        public string PadrinhoCidade { get; set; }
         public int GrupoId { get; set; }
 
         public int CandidatoCidadeId { get; set; }
-        public int PadrinhoCidadeId { get; set; }
 
         // Relacionamentos
-        [Required(ErrorMessage = "Informe a cidade do candidato")]
+        public virtual Cursilho Cursilho { get; set; }
+        [Required(ErrorMessage = "Cidade candidato(a) não informada")]
         public virtual Cidade CandidatoCidade { get; set; }
-        [Required(ErrorMessage = "Informe a cidade do padrinho")]
-        public virtual Cidade PadrinhoCidade { get; set; }
         public virtual Grupo Grupo { get; set; }
 
         // Campos calculados
